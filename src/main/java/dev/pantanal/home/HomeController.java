@@ -1,22 +1,21 @@
 package dev.pantanal.home;
 
-import org.springframework.stereotype.Controller;
+import java.util.Collections;
+import java.util.Map;
 
-import jakarta.ws.rs.DefaultValue;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
-import jakarta.ws.rs.core.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-@Path("/")
+
+@RestController
+@RequestMapping("/")
 public class HomeController {
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String hello(@QueryParam("nome") @DefaultValue("student") String nome) {
-        return String.format("Welcome to your first app, %s!", nome);
+    @GetMapping
+    public Map<String, String> home(@RequestParam(value= "nome", defaultValue =  "student") String nome) {
+        return Collections.singletonMap("message", String.format("Welcome to your first app, %s!", nome));
     }
     
 }
