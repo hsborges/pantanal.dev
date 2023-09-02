@@ -2,8 +2,8 @@ package dev.pantanal.filme;
 
 import java.util.Date;
 
-
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import jakarta.persistence.Basic;
@@ -12,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
@@ -64,9 +65,17 @@ public class Filme {
 
     @Basic
     @Column
+    private Integer classificacao;
+
+    @Column
+    @Lob
+    @JsonIgnore
+    private Byte[] imagem;
+
+    @Column
     @Enumerated(EnumType.STRING)
     private Formato formato;
-    
+
     @Basic
     @Column
     @Temporal(TemporalType.DATE)
