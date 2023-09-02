@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -21,14 +22,17 @@ public class FilmeController {
     private FilmeRepository repository;
 
     @GetMapping
-    public Collection<Filme> getAllFiles() {
-        return this.repository.findAll();
+    public Collection<Filme> getAllFiles(@RequestParam(value = "titulo", required = false) String texto) {
+        if (texto == null)
+            return this.repository.findAll();
+        return this.repository.findByTituloContainingIgnoreCase(texto);
     }
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Filme> getFilme(@PathVariable(value = "id", required = true) String id) {
         var filme = this.repository.findById(id);
-        if (filme.isPresent()) return ResponseEntity.ok(filme.get());
+        if (filme.isPresent())
+            return ResponseEntity.ok(filme.get());
         return ResponseEntity.notFound().build();
     }
 
