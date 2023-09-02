@@ -34,7 +34,7 @@ public class FilmeController {
 
     @PostMapping
     public ResponseEntity<Filme> createFilme(@RequestBody(required = true) Filme filme) {
-        this.repository.addFilme(filme);
+        this.repository.save(filme);
         return ResponseEntity.status(HttpStatus.CREATED).body(filme);
     }
 
@@ -42,7 +42,7 @@ public class FilmeController {
     public ResponseEntity<?> deleteFilme(@PathVariable(value = "id", required = true) String id) {
         var filme = this.repository.findById(id);
         if (filme.isPresent()) {
-            this.repository.deleteFilme(filme.get());
+            this.repository.delete(filme.get());
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
