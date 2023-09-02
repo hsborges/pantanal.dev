@@ -59,8 +59,8 @@ public class Filme {
     private String titulo;
 
     @Basic
-    @Column(columnDefinition = "integer")
-    private Number duracao;
+    @Column
+    private Integer duracao;
 
     @Basic
     @Column
