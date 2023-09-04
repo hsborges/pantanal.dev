@@ -2,26 +2,25 @@ package dev.pantanal.filme;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonValue;
-
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 public class Filme {
 
@@ -36,7 +35,6 @@ public class Filme {
             this.label = label;
         }
 
-        @JsonCreator
         public static Formato fromString(String text) {
             for (Formato b : Formato.values()) {
                 if (b.label.equalsIgnoreCase(text)) {
@@ -46,7 +44,6 @@ public class Filme {
             return null;
         }
 
-        @JsonValue
         public String toString() {
             return this.label.toString();
         }
@@ -69,7 +66,7 @@ public class Filme {
 
     @Column
     @Lob
-    @JsonIgnore
+    @Basic(fetch = FetchType.LAZY)
     private Byte[] imagem;
 
     @Column
