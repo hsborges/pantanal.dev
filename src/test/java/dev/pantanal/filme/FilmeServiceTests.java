@@ -1,0 +1,49 @@
+package dev.pantanal.filme;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.GregorianCalendar;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DuplicateKeyException;
+
+@SpringBootTest
+public class FilmeServiceTests {
+
+    @Autowired
+    private FilmeService filmeService;
+
+    @Mock
+    private FilmeRepository mockRepository;
+
+    @Test
+    public void createFilme() {
+        Filme barbie = new Filme();
+        barbie.setId("barbie-2023");
+        barbie.setTitulo("Barbie");
+        barbie.setDuracao(114);
+        barbie.setClassificacao(12);
+        barbie.setFormato(Filme.Formato._2D);
+        barbie.setLancamento(new GregorianCalendar(2023, 6, 20).getTime());
+
+        Filme barbarian = new Filme();
+        barbarian.setId("barbarian-2022");
+        barbarian.setTitulo("Barbarian");
+        barbarian.setDuracao(102);
+        barbarian.setClassificacao(16);
+        barbarian.setFormato(Filme.Formato._2D);
+        barbarian.setLancamento(new GregorianCalendar(2022, 8, 9).getTime());
+
+        Mockito.when(mockRepository.existsById(barbie.getId())).thenReturn(true);
+        Mockito.when(mockRepository.existsById(barbarian.getId())).thenReturn(false);
+
+        assertThrows(DuplicateKeyException.class, () -> filmeService.createFilme(barbie));
+        assertDoesNotThrow(() -> filmeService.createFilme(barbarian));
+    }
+
+}
