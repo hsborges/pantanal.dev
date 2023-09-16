@@ -6,20 +6,21 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.GregorianCalendar;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DuplicateKeyException;
 
 @SpringBootTest
 public class FilmeServiceTests {
 
-    @Autowired
-    private FilmeService filmeService;
-
     @Mock
     private FilmeRepository mockRepository;
+
+    @InjectMocks
+    private FilmeService filmeService;
 
     @Test
     public void createFilme() {
@@ -41,6 +42,9 @@ public class FilmeServiceTests {
 
         Mockito.when(mockRepository.existsById(barbie.getId())).thenReturn(true);
         Mockito.when(mockRepository.existsById(barbarian.getId())).thenReturn(false);
+
+        Mockito.when(mockRepository.save(Mockito.any(Filme.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0, Filme.class));
 
         assertThrows(DuplicateKeyException.class, () -> filmeService.createFilme(barbie));
         assertDoesNotThrow(() -> filmeService.createFilme(barbarian));
