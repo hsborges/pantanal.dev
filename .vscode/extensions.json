@@ -4,6 +4,7 @@
         "vmware.vscode-boot-dev-pack",
         "vscjava.vscode-lombok",
         "shengchen.vscode-checkstyle",
-        "GitHub.copilot"
+        "GitHub.copilot",
+        "redhat.vscode-xml"
     ]
 }
