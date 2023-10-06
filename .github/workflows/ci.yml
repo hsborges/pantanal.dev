@@ -36,13 +36,13 @@ jobs:
         run: mvn install
 
       - name: Executa testes
-        run: mvn --batch-mode --update-snapshots verify
+        run: mvn -Dspring.profiles.active=test --batch-mode --update-snapshots verify
 
       - name: 🚀 Coveralls Coverage Report Submission
         run: mvn coveralls:report --define repoToken=${{ secrets.COVERALL_REPO_TOKEN }}
 
       - name: Analisa com SonarCloud
-        run: ./mvnw -B verify sonar:sonar -Dsonar.projectKey=$SONAR_PROJECT_KEY -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
+        run: mvn -B verify sonar:sonar -Dspring.profiles.active=test -Dsonar.projectKey=$SONAR_PROJECT_KEY -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
