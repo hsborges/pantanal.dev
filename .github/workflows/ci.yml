@@ -40,3 +40,9 @@ jobs:
 
       - name: 🚀 Coveralls Coverage Report Submission
         run: mvn coveralls:report --define repoToken=${{ secrets.COVERALL_REPO_TOKEN }}
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
