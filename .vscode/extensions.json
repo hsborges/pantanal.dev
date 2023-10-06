@@ -6,6 +6,7 @@
         "shengchen.vscode-checkstyle",
         "GitHub.copilot",
         "redhat.vscode-xml",
-        "Arjun.swagger-viewer"
+        "Arjun.swagger-viewer",
+        "github.vscode-github-actions"
     ]
 }
