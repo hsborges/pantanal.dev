@@ -36,3 +36,6 @@ jobs:
 
       - name: Executa testes
         run: mvn --batch-mode --update-snapshots verify
+
+      - name: 🚀 Coveralls Coverage Report Submission
+        run: mvn coveralls:report --define repoToken=${{ secrets.COVERALL_REPO_TOKEN }}
