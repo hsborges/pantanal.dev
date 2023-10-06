@@ -23,10 +23,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.pantanal.Utils;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/filmes")
+@Tag(name = "Filmes", description = "API de filmes")
 public class FilmeController {
 
     @Autowired
@@ -61,12 +69,20 @@ public class FilmeController {
     }
 
     @GetMapping
-    public Collection<FilmeDTO> getAllFiles(@RequestParam(value = "titulo", required = false) String texto) {
+    @Operation(summary = "Lista todos os filmes", description = "Lista todos os filmes cadastrados permitindo filtrar por título")
+    @ApiResponse(responseCode = "200", description = "Lista de filmes")
+    public Collection<FilmeDTO> getAllFiles(
+            @Parameter(description = "Título do filme") @RequestParam(value = "titulo", required = false) String texto) {
         return this.service.findFilmes(texto).stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
+    @Operation(summary = "Obtém um filme", description = "Obtém um filme pelo seu identificador")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Filme encontrado"),
+            @ApiResponse(responseCode = "404", description = "Filme não encontrado", content = @Content(schema = @Schema(hidden = true))) })
     @GetMapping(path = "/{id}")
-    public ResponseEntity<FilmeDTO> getFilme(@PathVariable(value = "id", required = true) String id) {
+    public ResponseEntity<FilmeDTO> getFilme(
+            @Parameter(description = "identificador") @PathVariable(value = "id", required = true) String id) {
         var filme = this.service.getFilme(id);
         if (filme.isPresent())
             return ResponseEntity.ok(convertToDTO(filme.get()));

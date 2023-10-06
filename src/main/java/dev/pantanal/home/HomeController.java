@@ -1,21 +1,24 @@
 package dev.pantanal.home;
 
-import java.util.Collections;
-import java.util.Map;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
 
 @RestController
 @RequestMapping("/")
+@Hidden
+@OpenAPIDefinition(info = @Info(title = "Filme Microsserviço", description = "Microsserviço desenvolvido com propósito didático para o módulo 3 (peixe-dourado).", version = "0.2.0", contact = @Contact(name = "Hudson Silva Borges", url = "https://pantanal.dev", email = "hudson.borges@ufms.br")))
 public class HomeController {
 
     @GetMapping
-    public Map<String, String> home(@RequestParam(value= "nome", defaultValue =  "student") String nome) {
-        return Collections.singletonMap("message", String.format("Welcome to your first app, %s!", nome));
+    public RedirectView home() {
+        return new RedirectView("swagger-ui");
     }
-    
+
 }

@@ -5,6 +5,7 @@
         "vscjava.vscode-lombok",
         "shengchen.vscode-checkstyle",
         "GitHub.copilot",
-        "redhat.vscode-xml"
+        "redhat.vscode-xml",
+        "Arjun.swagger-viewer"
     ]
 }
