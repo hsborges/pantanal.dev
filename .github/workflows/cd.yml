@@ -25,4 +25,4 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: pantanal.dev/filmes:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/filmes.pantanal.dev:latest
