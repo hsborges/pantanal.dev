@@ -7,6 +7,7 @@
         "GitHub.copilot",
         "redhat.vscode-xml",
         "Arjun.swagger-viewer",
-        "github.vscode-github-actions"
+        "github.vscode-github-actions",
+        "ms-azuretools.vscode-docker"
     ]
 }

@@ -13,7 +13,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 @RestController
 @RequestMapping("/")
 @Hidden
-@OpenAPIDefinition(info = @Info(title = "Filme Microsserviço", description = "Microsserviço desenvolvido com propósito didático para o módulo 3 (peixe-dourado).", version = "0.2.0", contact = @Contact(name = "Hudson Silva Borges", url = "https://pantanal.dev", email = "hudson.borges@ufms.br")))
+@OpenAPIDefinition(info = @Info(title = "Filme Microsserviço", description = "Microsserviço desenvolvido com propósito didático para o módulo 3 (peixe-dourado).", contact = @Contact(name = "Hudson Silva Borges", url = "https://pantanal.dev", email = "hudson.borges@ufms.br")))
 public class HomeController {
 
     @GetMapping
